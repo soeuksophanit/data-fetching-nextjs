@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Soeuk Sophanit BTB G12
+
+### Thursday 11 , April , 2024
 
 ## Getting Started
 
