@@ -6,8 +6,6 @@ import Link from "next/link";
 
 const MoviePage = async () => {
   const { movies, allGenre } = await fetchApi();
-  console.log("Genre", allGenre);
-
   const random = Math.floor(Math.random() * movies.length) + 1;
   return (
     <div>
@@ -28,9 +26,10 @@ const MoviePage = async () => {
                   >
                     <div className="inline-block overflow-hidden">
                       <Image
-                        alt={movie.movie_title}
+                        alt={movie.description.substring(0, 10)}
                         height="1000"
                         width="1000"
+                        priority
                         src={
                           movie?.image && movie.image !== undefined
                             ? movie.image

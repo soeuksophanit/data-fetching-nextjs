@@ -24,7 +24,11 @@ const AnimateMovie = ({ movie }: { movie: Movie }) => {
       className="hero text-white relative after:absolute after:inset-0 after:bg-blend-overlay  after:top-0"
     >
       <Image
-        alt={""}
+        alt={
+          movie?.movie_title != undefined
+            ? movie.movie_title
+            : "picture of moive"
+        }
         height="1000"
         width="1000"
         src={

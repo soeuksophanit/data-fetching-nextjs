@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type Tab = {
   title: string;
@@ -22,17 +22,13 @@ export const Tabs = ({
   activeTabClassName?: string;
   tabClassName?: string;
 }) => {
-  const [activeTab, setActiveTab] = useState(
-    JSON.parse(localStorage?.getItem("activeTab")!)
-  );
+  const path = usePathname();
+  console.log(path);
 
   const moveSelectedTabToTop = (idx: number) => {
     const newTabs = [...propTabs];
     const selectedTab = newTabs.splice(idx, 1);
     newTabs.unshift(selectedTab[0]);
-    localStorage.setItem("activeTab", JSON.stringify(idx));
-
-    setActiveTab(JSON.parse(localStorage.getItem("activeTab")!));
   };
 
   return (
@@ -65,7 +61,7 @@ export const Tabs = ({
               transformStyle: "preserve-3d",
             }}
           >
-            {activeTab == idx && (
+            {path === tab.link && (
               <motion.div
                 layoutId="clickedbutton"
                 transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
@@ -78,7 +74,7 @@ export const Tabs = ({
 
             <span
               className={`relative block font-medium ${
-                activeTab === idx ? "text-white" : ""
+                path === tab.link ? "text-white" : ""
               }`}
             >
               {tab.title}
