@@ -9,19 +9,12 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { Movie } from "@/service/movieService";
 
-export const HeroParallax = ({
-  products,
-}: {
-  products: {
-    title: string;
-    link: string;
-    thumbnail: string;
-  }[];
-}) => {
-  const firstRow = products.slice(0, 5);
-  const secondRow = products.slice(5, 10);
-  const thirdRow = products.slice(10, 15);
+export const HeroParallax = ({ movies }: { movies: Movie[] }) => {
+  const firstRow = movies.slice(0, 5);
+  const secondRow = movies.slice(5, 10);
+  const thirdRow = movies.slice(10, 15);
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -71,14 +64,14 @@ export const HeroParallax = ({
         className=""
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
-          {firstRow.map((product, idx) => (
-            <ProductCard product={product} translate={translateX} key={idx} />
+          {firstRow.map((movie, idx) => (
+            <ProductCard movie={movie} translate={translateX} key={idx} />
           ))}
         </motion.div>
         <motion.div className="flex flex-row  mb-20 space-x-20 ">
           {secondRow.map((product, idx) => (
             <ProductCard
-              product={product}
+              movie={product}
               translate={translateXReverse}
               key={idx}
             />
@@ -86,7 +79,7 @@ export const HeroParallax = ({
         </motion.div>
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
           {thirdRow.map((product, idx) => (
-            <ProductCard product={product} translate={translateX} key={idx} />
+            <ProductCard movie={product} translate={translateX} key={idx} />
           ))}
         </motion.div>
       </motion.div>
@@ -148,14 +141,10 @@ export const Header = () => {
 };
 
 export const ProductCard = ({
-  product,
+  movie,
   translate,
 }: {
-  product: {
-    title: string;
-    link: string;
-    thumbnail: string;
-  };
+  movie: Movie;
   translate: MotionValue<number>;
 }) => {
   return (
@@ -166,24 +155,25 @@ export const ProductCard = ({
       whileHover={{
         y: -20,
       }}
-      key={product.title}
+      key={movie.movie_title}
       className="group/product h-96 w-[30rem] relative flex-shrink-0"
     >
       <Link
-        href={product.link}
+        href={"/movies/detail/" + movie.movie_id}
         className="block group-hover/product:shadow-2xl "
       >
         <Image
-          src={product.thumbnail}
+          priority
+          src={movie.image ? movie.image : "/img.jpg"}
           height="600"
           width="600"
           className="object-cover object-left-top absolute h-full w-full inset-0"
-          alt={product.title}
+          alt={movie.movie_title}
         />
       </Link>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
-        {product.title}
+        {movie.movie_title}
       </h2>
     </motion.div>
   );
