@@ -4,6 +4,18 @@
 
 ## Getting Started
 
+Install all dependencies
+
+```bash
+npm i
+# or
+yarn i
+# or
+pnpm i
+# or
+bun i
+```
+
 First, run the development server:
 
 ```bash
