@@ -22,22 +22,34 @@ export const Tabs = ({
   activeTabClassName?: string;
   tabClassName?: string;
 }) => {
-  const [active, setActive] = useState<Tab>(propTabs[0]);
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(
+    JSON.parse(localStorage?.getItem("activeTab")!)
+  );
 
   const moveSelectedTabToTop = (idx: number) => {
     const newTabs = [...propTabs];
     const selectedTab = newTabs.splice(idx, 1);
     newTabs.unshift(selectedTab[0]);
-    setActive(newTabs[0]);
-    setActiveTab(idx);
+    localStorage.setItem("activeTab", JSON.stringify(idx));
+
+    setActiveTab(JSON.parse(localStorage.getItem("activeTab")!));
   };
 
   return (
     <>
-      <div
+      <motion.div
+        initial={{
+          y: -100,
+        }}
+        animate={{
+          y: 0,
+          transition: {
+            type: "spring",
+            delay: 0.2,
+          },
+        }}
         className={cn(
-          "flex flex-row items-center bg-white backdrop-blur-sm shadow-md rounded-full p-1 justify-start relative overflow-auto sm:overflow-visible no-visible-scrollbar w-fit",
+          "flex flex-row items-center bg-white  backdrop-blur-sm rounded-full p-1 justify-start relative overflow-auto sm:overflow-visible no-visible-scrollbar w-fit",
           containerClassName
         )}
       >
@@ -53,12 +65,12 @@ export const Tabs = ({
               transformStyle: "preserve-3d",
             }}
           >
-            {active.value === tab.value && (
+            {activeTab == idx && (
               <motion.div
                 layoutId="clickedbutton"
                 transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
                 className={cn(
-                  "absolute inset-0 bg-[#010F1D] rounded-full ",
+                  `absolute inset-0 bg-[#010F1D] rounded-full `,
                   activeTabClassName
                 )}
               />
@@ -66,14 +78,14 @@ export const Tabs = ({
 
             <span
               className={`relative block font-medium ${
-                activeTab === idx ? "text-white" : "text-[#010F1D]"
+                activeTab === idx ? "text-white" : ""
               }`}
             >
               {tab.title}
             </span>
           </Link>
         ))}
-      </div>
+      </motion.div>
     </>
   );
 };

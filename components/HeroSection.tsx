@@ -4,7 +4,7 @@ import { HeroParallax } from "@/components/ui/hero-parallax";
 import { Movie, fetchApi } from "@/service/movieService";
 
 export async function Hero() {
-  // const heroMovie = await fetchApi();
+  const heroMovie = await fetchApi();
   return <HeroParallax products={products} />;
 }
 export const products = [

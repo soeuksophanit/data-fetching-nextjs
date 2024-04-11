@@ -23,7 +23,7 @@ export function Navbar() {
   ];
 
   return (
-    <div className="relative b flex flex-col max-w-5xl mx-auto w-fit  items-start justify-start">
+    <div className="relative flex flex-col   w-fit  items-center justify-between">
       <Tabs tabs={tabs} />
     </div>
   );

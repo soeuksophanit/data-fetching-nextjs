@@ -10,10 +10,13 @@ const fadeIn = {
   initial: {
     opacity: 0.5,
     y: 100,
+    filter: "blur(20px)",
   },
   animate: (index: number) => ({
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
+
     transition: { delay: 0.05 * index },
   }),
 };
@@ -22,11 +25,11 @@ export default function TracingBeamDemo() {
   return (
     <>
       <Lamp />
-      <TracingBeam className="px-6">
+      <TracingBeam className="px-6 mt-10 ">
         <div className="max-w-2xl mx-auto antialiased pt-4 relative">
           {dummyContent.map((item, index) => (
             <motion.div
-              variants={fadeIn}
+              variants={{ ...fadeIn }}
               initial="initial"
               whileInView={"animate"}
               custom={index}
@@ -38,7 +41,9 @@ export default function TracingBeamDemo() {
                 {item.badge}
               </h2>
 
-              <p className={twMerge("", "text-xl mb-4")}>{item.title}</p>
+              <p className={twMerge("", "text-xl mb-4 text-white")}>
+                {item.title}
+              </p>
 
               <div className="text-sm  prose prose-sm dark:prose-invert">
                 {item?.image && (

@@ -18,7 +18,21 @@ export type Movie = {
 };
 
 export const fetchApi = async () => {
-  const response = await fetch("https://movie-api-295p.vercel.app/api");
-  const { payload }: ResponseApi<Movie[]> = await response.json();
-  return payload;
+  const response = await fetch(
+    "https://movie-api-get-only-bmc3.vercel.app/api",
+    {
+      next: {
+        revalidate: 10,
+      },
+    }
+  );
+  const { payload: movies }: ResponseApi<Movie[]> = await response.json();
+  const allGenre = Array.from(new Set(movies.map((movie) => movie.genre)));
+  return { movies, allGenre };
 };
+
+export function filterMovie(movies: Movie[], genre: string) {
+  return movies.filter(
+    (movie) => movie.genre.toLocaleLowerCase() === genre.toLocaleLowerCase()
+  );
+}
