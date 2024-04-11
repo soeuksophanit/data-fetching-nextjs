@@ -36,8 +36,9 @@ const DetailPage = async ({ params: { id } }: Props) => {
           <p className="italic text-[12px]">{currentMovie?.genre}</p>
           <div className="flex gap-1">
             {Array.from({ length: Math.round(currentMovie?.rating) }).map(
-              (star) => (
+              (star, idx) => (
                 <svg
+                  key={idx}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 576 512"
                   className="w-[14px]"
